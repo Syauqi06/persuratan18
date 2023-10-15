@@ -27,43 +27,45 @@ class Halaman_dashboardController extends Controller
         $jenisSuratData = $jenis->all();
 
         return view('dashboard.tambah', [
-            'jenisSurat' => $jenisSuratData,
+            'jenis_Surat' => $jenisSuratData,
         ]);
     }
 
     public function store(Request $request, Surat $surat)
     {
-        $data = $request->validate([
-            'tanggal_surat' => 'required',
-            'ringkasan' => 'required',
-            'id_jenis_surat' => 'required',
-            'id_user' => 'required',
-            'file' => 'required',
-        ]);
+        $data = $request->validate(
+            [
+                'id_jenis_surat' => 'required',
+                'tanggal_surat' => 'required',
+                'ringkasan' => 'required',
+                'file' => 'required|file',
+            ]
+        );
 
         $user = Auth::user();
         $data['id_user'] = $user->id_user;
-        
-        if ($request->hasFile('file')) {
+
+        if($request->hasFile('file'))
+        {
             $foto_file = $request->file('file');
-            $foto_nama = md5($foto_file->getClientOriginalName() . time()) . '.' . $foto_file->getClientOriginalExtension();
-            $foto_file->move(public_path('foto'), $foto_nama);
+            $foto_nama = $foto_file->getClientOriginalName() . time() . '.' . $foto_file->getClientOriginalExtension();
+            $foto_file->move(public_path('image'), $foto_nama);
             $data['file'] = $foto_nama;
         }
-
-        if ($surat->create($data)) {
-            return redirect('/dashboard')->with('success', 'Data surat baru berhasil ditambah');
+        
+        if(Surat::create($data))
+        {
+            return redirect()->to('/dashboard')->with("success", "Data Surat Berhasil Ditambahkan");
+        }else
+        {
+            return back()->with("error","Data Surat Gagal Ditambahkan");
         }
-
-        return back()->with('error', 'Data surat gagal ditambahkan');
-    }
-
-
+    } 
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Surat $surat)
     {
         //
     }
@@ -71,15 +73,18 @@ class Halaman_dashboardController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id, Surat $surat, Jenis_surat $jenis)
+    public function edit(Surat $surat, Jenis_surat $jenis_surat, String $id)
     {
+        //
         $suratData = Surat::where('id_surat', $id)->first();
-        $jenisSuratData = $jenis->all();
+        $jenis_surat = Jenis_surat::all();
 
-        return view('dashboard.edit', [
+        $data = [
             'surat' => $suratData,
-            'jenisSurat' => $jenisSuratData,
-        ]);
+            'jenis_surat' => $jenis_surat
+        ];
+
+        return view('dashboard.edit', $data);
     }
 
     /**
@@ -87,57 +92,50 @@ class Halaman_dashboardController extends Controller
      */
     public function update(Request $request, Surat $surat)
     {
-        $id_surat = $request->input('id_surat');
-
         $data = $request->validate([
-            'tanggal_surat' => 'sometimes',
-            'ringkasan' => 'sometimes',
-            'id_jenis_surat' => 'sometimes',
-            'file' => 'sometimes|file',
+            'id_surat' => 'required',
+            'tanggal_surat'=> 'required',
+            'ringkasan'=> 'required',
+            'id_jenis_surat'=> 'required',
+            'file'=> 'sometimes'
         ]);
-
-        if ($id_surat !== null) {
-            if ($request->hasFile('file')) {
+        if($data){
+            if($request->hasFile('file')){
                 $foto_file = $request->file('file');
-                $foto_extension = $foto_file->getClientOriginalExtension();
-                $foto_nama = md5($foto_file->getClientOriginalName() . time()) . '.' . $foto_extension;
-                $foto_file->move(public_path('foto'), $foto_nama);
-
-                $update_data = $surat->where('id_surat', $id_surat)->first();
-                File::delete(public_path('foto') . '/' . $update_data->file);
-
+                $foto_nama = $foto_file->getClientOriginalName() . time() . '.' . $foto_file->getClientOriginalExtension();
+                $foto_file->move(public_path('image'), $foto_nama);
+                $update_data = $surat->where('id_surat', $request->input('id_surat'))->first();
+                File::delete(public_path('image').'/'. $update_data->file);
                 $data['file'] = $foto_nama;
             }
-
-            $dataUpdate = $surat->where('id_surat', $id_surat)->update($data);
-
-            if ($dataUpdate) {
-                return redirect('/dashboard')->with('success', 'Data surat berhasil diupdate');
-            }
-
-            return back()->with('error', 'Data jenis surat gagal diupdate');
+            Surat::where('id_surat', $request->input('id_surat'))->update($data);
+            return redirect()->to('/dashboard')->with('success','Data Surat Berhasil di Update');
+        } else {
+            return back()->with('error','Data Surat Gagal di Update');
         }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Surat $surat, Request $request)
+    public function destroy(Request $request, Surat $surat)
     {
+        //
         $id_surat = $request->input('id_surat');
-        $data = Surat::find($id_surat);
-
-        if (!$data) {
-            return response()->json(['success' => false, 'pesan' => 'Data tidak ditemukan'], 404);
-        }
-
-        $filePath = public_path('foto') . '/' . $data->file;
-
-        if (file_exists($filePath) && unlink($filePath)) {
-            $data->delete();
-            return response()->json(['success' => true]);
-        }
-
-        return response()->json(['success' => false, 'pesan' => 'Data gagal dihapus']);
+        $aksi = $surat->where('id_surat',$id_surat)->delete();
+            if($aksi)
+            {
+                $pesan = [
+                    'success' => true,
+                    'pesan'   => 'Jenis surat berhasil dihapus'
+                ];
+            }else
+            {
+                $pesan = [
+                    'success' => false,
+                    'pesan'   => 'Jenis surat gagal dihapus'
+                ];
+            }
+            return response()->json($pesan);
     }
 }

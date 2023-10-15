@@ -10,7 +10,8 @@
                     </span>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="simpan" enctype="multipart/form-data">
+                    <form method="post" action="simpan" enctype="multipart/form-data">
+                        @csrf
                         <div class="row">
                             <div class="col-md-5">
                                 <div class="form-group">
@@ -21,7 +22,7 @@
                                 <div class="form-group">
                                     <label>Jenis Surat</label>
                                     <select name="id_jenis_surat" class="form-control">
-                                        @foreach ($jenisSurat as $jenis)
+                                        @foreach ($jenis_surat as $jenis)
                                             <option value="{{ $jenis->id_jenis_surat }}"
                                                 {{ $jenis->id_jenis_surat == $surat->id_jenis_surat ? 'selected' : '' }}>
                                                 {{ $jenis->jenis_surat }}

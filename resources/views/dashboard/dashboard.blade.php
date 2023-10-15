@@ -12,7 +12,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-4">
-                            <a href="/dashboard/tambah">
+                            <a href="/tambah">
                                 <button class="btn btn-success">Tambah Surat</button>
                             </a>
 
@@ -44,7 +44,7 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <a href="surat/edit/{{ $s->id_surat }}">
+                                            <a href="/edit/{{ $s->id_surat }}">
                                                 <button class="btn btn-primary">EDIT</button>
                                             </a>
                                             <button class="btn btn-danger btnHapus" idSurat="{{ $s->id_surat }}">HAPUS</button>

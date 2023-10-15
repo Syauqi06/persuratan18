@@ -26,7 +26,6 @@
                                 <div class="form-group">
                                     <label>Tanggal Surat</label>
                                     <input type="date" class="form-control" name="tanggal_surat" />
-                                    <input type="hidden" name="id_user">
                                     @csrf
                                 </div>
                                 <div class="form-group">
@@ -48,7 +47,7 @@
                                 </div>
                                 <div class="col-md-4 mt-3">
                                     <button type="submit" class="btn btn-primary">SIMPAN</button>
-                                    <a href="#" onclick="window.history.back();" class="btn btn-success">KEMBALI</a>
+                                    <a href="#" onclick="window.history.back();" class="btn btn-danger">KEMBALI</a>
                                 </div>
                             </div>
                         </div>
