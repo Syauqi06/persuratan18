@@ -1,5 +1,5 @@
 @extends('templates.layout')
-@section('title', 'Tambah User ')
+@section('title', 'Persuratan | Tambah User')
 @section('content')
     <div class="row">
         <div class="col-md-12">
@@ -10,7 +10,7 @@
                     </span>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="simpan">
+                    <form method="POST" action="/simpan-user">
                         <div class="row">
                             <div class="col-md-5">
                                 <div class="form-group">
@@ -32,7 +32,7 @@
                                 </div>
                                 <div class="col-md-4 mt-3">
                                     <button type="submit" class="btn btn-primary">SIMPAN</button>
-                                    <a href="#" onclick="window.history.back();" class="btn btn-success">KEMBALI</a>
+                                    <a href="#" onclick="window.history.back();" class="btn btn-danger">KEMBALI</a>
                                 </div>
                             </div>
                         </div>

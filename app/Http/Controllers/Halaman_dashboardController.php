@@ -24,10 +24,10 @@ class Halaman_dashboardController extends Controller
      */
     public function create(Jenis_surat $jenis)
     {
-        $jenisSuratData = $jenis->all();
+        $jenis_surat = $jenis->all();
 
         return view('dashboard.tambah', [
-            'jenis_Surat' => $jenisSuratData,
+            'jenis_surat' => $jenis_surat,
         ]);
     }
 
@@ -120,22 +120,18 @@ class Halaman_dashboardController extends Controller
      */
     public function destroy(Request $request, Surat $surat)
     {
-        //
         $id_surat = $request->input('id_surat');
-        $aksi = $surat->where('id_surat',$id_surat)->delete();
-            if($aksi)
-            {
-                $pesan = [
-                    'success' => true,
-                    'pesan'   => 'Jenis surat berhasil dihapus'
-                ];
-            }else
-            {
-                $pesan = [
-                    'success' => false,
-                    'pesan'   => 'Jenis surat gagal dihapus'
-                ];
-            }
-            return response()->json($pesan);
+        $data = Surat::find($id_surat);
+
+        if (!$data) {
+            return response()->json(['success' => false, 'pesan' => 'Data tidak ditemukan'], 404);
+        }
+
+        $filePath = public_path('image') . '/' . $data->file;
+        
+        if (file_exists($filePath) && unlink($filePath)) {
+            $data->delete();
+            return response()->json(['success' => true]);
+        }
     }
 }

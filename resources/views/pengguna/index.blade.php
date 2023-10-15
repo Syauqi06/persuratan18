@@ -12,7 +12,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-4">
-                            <a href="user/tambah">
+                            <a href="/tambah-user">
                                 <button class="btn btn-success">Tambah User</button>
                             </a>
 
@@ -33,7 +33,7 @@
                                         <td>{{ $u->username }}</td>
                                         <td>{{ $u->role }}</td>
                                         <td>
-                                            <a href="user/edit/{{ $u->id_user }}">
+                                            <a href="/edit-user/{{ $u->id_user }}">
                                                 <button class="btn btn-primary">EDIT</button>
                                             </a>
                                             <button class="btn btn-danger btnHapus" idUser="{{ $u->id_user }}">HAPUS</button>
@@ -70,7 +70,7 @@
                     //Ajax Delete
                     $.ajax({
                         type: 'DELETE',
-                        url: 'user/hapus',
+                        url: '/hapus-user',
                         data: {
                             id_user: idUser,
                             _token: "{{ csrf_token() }}"

@@ -40,17 +40,16 @@
                         @if (Auth::user()->role == 'admin')
                             
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/dashboard/manage-user') }}">Manajemen Pengguna</a>
+                            <a class="nav-link" href="{{ url('/manage-user') }}">Manajemen Pengguna</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('dashboard/jenis_surat') }}">Jenis Surat</a>
+                            <a class="nav-link" href="{{ url('/jenis_surat') }}">Jenis Surat</a>
                         </li>
                         
                         @endif
                     </ul>
                     <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
+                        <button class="btn btn-outline-danger" type="submit">Logout</button>
                     </form>
                 </div>
             </div>

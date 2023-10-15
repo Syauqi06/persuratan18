@@ -38,16 +38,16 @@ Route::delete('surat/hapus', [Halaman_dashboardController::class, 'destroy']);
     Route::get('/tambah-user', [Halaman_manajemen_userController::class, 'create']);
     Route::post('/simpan-user', [Halaman_manajemen_userController::class, 'store']);
     Route::get('/edit-user/{id}', [Halaman_manajemen_userController::class, 'edit']);
-    Route::post('/update-user/{id}', [Halaman_manajemen_userController::class, 'update']);
-    Route::delete('/hapus-user/{id}', [Halaman_manajemen_userController::class, 'destroy']);
+    Route::post('/edit-user/simpan', [Halaman_manajemen_userController::class, 'update']);
+    Route::delete('/hapus-user', [Halaman_manajemen_userController::class, 'destroy']);
 
 // MANAGE JENIS SURAT
     Route::get('/jenis_surat', [Halaman_jenis_suratController::class, 'index']);
     Route::get('/tambah-jenis', [Halaman_jenis_suratController::class, 'create']);
     Route::post('/simpan-jenis', [Halaman_jenis_suratController::class, 'store']);
     Route::get('/edit-jenis/{id}', [Halaman_jenis_suratController::class, 'edit']);
-    Route::post('/update-jenis/{id}', [Halaman_jenis_suratController::class, 'update']);
-    Route::delete('/hapus-jenis/{id}', [Halaman_jenis_suratController::class, 'destroy']);
+    Route::post('/edit-jenis/simpan', [Halaman_jenis_suratController::class, 'update']);
+    Route::delete('/hapus-jenis', [Halaman_jenis_suratController::class, 'destroy']);
 });
 
 // LOGIN FORM

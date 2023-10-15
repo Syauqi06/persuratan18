@@ -12,7 +12,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-4">
-                            <a href="dashboard/jenis_surat/tambah">
+                            <a href="/tambah-jenis">
                                 <button class="btn btn-success">Tambah Jenis Surat</button>
                             </a>
 
@@ -31,7 +31,7 @@
                                     <tr>
                                         <td>{{ $j->jenis_surat }}</td>
                                         <td>
-                                            <a href="surat/edit/{{ $j->id_jenis_surat }}">
+                                            <a href="/edit-jenis/{{ $j->id_jenis_surat }}">
                                                 <button class="btn btn-primary">EDIT</button>
                                             </a>
                                             <button class="btn btn-danger btnHapus" idJenis="{{ $j->id_jenis_surat }}">HAPUS
@@ -69,7 +69,7 @@
                     //Ajax Delete
                     $.ajax({
                         type: 'DELETE',
-                        url: 'surat/hapus',
+                        url: '/hapus-jenis',
                         data: {
                             id_jenis_surat: idJenis,
                             _token: "{{ csrf_token() }}"

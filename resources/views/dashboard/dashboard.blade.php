@@ -39,7 +39,7 @@
                                         <td>{{ $s->ringkasan }}</td>
                                         <td>
                                             @if ($s->file)
-                                                <img src="{{ url('foto') . '/' . $s->file }} "
+                                                <img src="{{ url('image') . '/' . $s->file }} "
                                                     style="max-width: 250px; height: auto;" />
                                             @endif
                                         </td>
