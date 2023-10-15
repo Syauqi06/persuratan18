@@ -49,7 +49,7 @@
                         @endif
                     </ul>
                     <form class="d-flex">
-                        <button class="btn btn-outline-danger" type="submit">Logout</button>
+                        <a href="{{ url('logout') }}" class="btn btn-outline-danger">Logout</a>
                     </form>
                 </div>
             </div>

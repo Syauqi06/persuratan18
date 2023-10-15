@@ -25,14 +25,16 @@ use Illuminate\Support\Facades\Route;
 
 
 // DASHBOARD SURAT
-Route::group(['middleware' => ['AdminOnly:admin']], function () {
+Route::group(['middleware' => ['AdminOnly:admin,operator']], function () {
 Route::get('dashboard', [Halaman_dashboardController::class, 'index']);
 Route::get('/tambah', [Halaman_dashboardController::class, 'create']);
 Route::post('/simpan', [Halaman_dashboardController::class, 'store']);
 Route::get('/edit/{id}', [Halaman_dashboardController::class, 'edit']);
 Route::post('edit/simpan', [Halaman_dashboardController::class, 'update']);
 Route::delete('surat/hapus', [Halaman_dashboardController::class, 'destroy']);
+});
 
+Route::group(['middleware' => ['AdminOnly:admin']], function () {
 // MANAGE USER
     Route::get('/manage-user', [Halaman_manajemen_userController::class, 'index']);
     Route::get('/tambah-user', [Halaman_manajemen_userController::class, 'create']);
