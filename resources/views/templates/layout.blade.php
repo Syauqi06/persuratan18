@@ -17,9 +17,7 @@
                     font-size: 3.5rem;
                 }
             }
-    
-            /* Show it is fixed to the top */
-            body {
+                body {
                 min-height: 75rem;
                 padding-top: 5.5rem;
             }
@@ -47,6 +45,9 @@
                         </li>
                         
                         @endif
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('/transaksi-surat') }}">Transaksi Surat</a>
+                        </li>
                     </ul>
                     <form class="d-flex">
                         <a href="{{ url('logout') }}" class="btn btn-outline-danger">Logout</a>

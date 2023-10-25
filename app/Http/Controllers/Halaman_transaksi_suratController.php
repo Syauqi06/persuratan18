@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Logs;
 use Illuminate\Http\Request;
 
 class Halaman_transaksi_suratController extends Controller
@@ -9,9 +10,13 @@ class Halaman_transaksi_suratController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    function index(Logs $logs)
     {
-        //
+        $data = [
+            'transaksi' => $logs::orderBy('id_logs', 'desc')->get()
+        ];
+
+        return view('transaksi.index', $data);
     }
 
     /**
@@ -19,7 +24,7 @@ class Halaman_transaksi_suratController extends Controller
      */
     public function create()
     {
-        //
+        return view('transaksi.tambah');
     }
 
     /**
@@ -57,8 +62,16 @@ class Halaman_transaksi_suratController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
-        //
+        $id_logs = $request->input('id_logs');
+        // dd($id_logs);
+        
+        if ($id_logs != null) {
+            foreach ($id_logs as $id) {
+                Logs::where('id_logs', $id)->delete();
+            }
+        }
+        return redirect()->to('/transaksi/surat')->with('success', 'Data berhasil dihapus');
     }
 }

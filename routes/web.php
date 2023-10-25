@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Halaman_dashboardController;
 use App\Http\Controllers\Halaman_manajemen_userController;
 use App\Http\Controllers\Halaman_jenis_suratController;
+use App\Http\Controllers\Halaman_transaksi_suratController;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Routing\RouteGroup;
 use Illuminate\Support\Facades\Route;
@@ -50,6 +51,10 @@ Route::group(['middleware' => ['AdminOnly:admin']], function () {
     Route::get('/edit-jenis/{id}', [Halaman_jenis_suratController::class, 'edit']);
     Route::post('/edit-jenis/simpan', [Halaman_jenis_suratController::class, 'update']);
     Route::delete('/hapus-jenis', [Halaman_jenis_suratController::class, 'destroy']);
+
+// TRANSAKSI SURAT
+    Route::get('/transaksi-surat', [Halaman_transaksi_suratController::class, 'index']);
+    Route::post('/hapus-transaksi', [Halaman_transaksi_suratController::class, 'destroy']);
 });
 
 // LOGIN FORM
